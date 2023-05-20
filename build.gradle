@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "com.microsoft.azure.azurewebapp" version "1.2.0"
+}
+
+group = 'dev.kryz'
+version = '1.1'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+azurewebapp {
+    subscription = 'f11d0eda-5908-455e-9b81-74c7fe526b02'
+    resourceGroup = 'app-resource-group'
+    appName = 'kryz81panda'
+    pricingTier = 'F1'
+    region = 'East US'
+
+    runtime {
+        os = 'Linux'
+        webContainer = 'Java SE' // or 'Java SE' if you want to run an executable jar
+        javaVersion = 'Java 17'
+    }
+
+    appSettings {
+    }
+
+    auth {
+        type = 'oauth2' // support azure_cli, oauth2, device_code and service_principal
+    }
+}
